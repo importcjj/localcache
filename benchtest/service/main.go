@@ -18,15 +18,15 @@ var (
 )
 
 var (
-	dangerous *singlecache.Service
+	dangerous *localcache.Service
 )
 
 func init() {
-	dangerous = singlecache.NewService(&singlecache.Options{})
+	dangerous = localcache.NewService(&localcache.Options{})
 	dangerous.Register("/getstring", 5*time.Second, cacheGetter)
 }
 
-func cacheGetter(key singlecache.RequestKey, sink singlecache.Sink) error {
+func cacheGetter(key localcache.RequestKey, sink localcache.Sink) error {
 	s, err := upstream()
 	if err != nil {
 		return err
@@ -37,7 +37,7 @@ func cacheGetter(key singlecache.RequestKey, sink singlecache.Sink) error {
 }
 
 func getHandler(rw http.ResponseWriter, req *http.Request) {
-	cache := dangerous.Get(&singlecache.Key{
+	cache := dangerous.Get(&localcache.Key{
 		GetterName: req.URL.Path,
 		CacheName:  req.RequestURI,
 		Value:      req,

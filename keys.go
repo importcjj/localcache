@@ -1,4 +1,4 @@
-package singlecache
+package localcache
 
 // RequestKey ...
 type RequestKey interface {

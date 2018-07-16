@@ -1,10 +1,10 @@
-package singlecache
+package localcache
 
 import (
 	"errors"
 )
 
-var ErrBrokerUndefined = errors.New("sorry! singlecache's broker undefined")
+var ErrBrokerUndefined = errors.New("sorry! localcache's broker undefined")
 
 // Broker ...
 type Broker interface {
