@@ -8,4 +8,10 @@ go:
   - 1.9.x
   - master
 
+before_install:
+  - go get -u  github.com/go-redis/redis
+
 script: go test ./...
+
+services:
+  - redis-server
