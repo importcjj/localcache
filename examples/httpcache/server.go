@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/backend/cache-benchmark/mock"
-	"github.com/backend/localcache"
 	"github.com/go-redis/redis"
+	"github.com/importcjj/cache-benchmark/mock"
+	"github.com/importcjj/localcache"
 	"net/http"
 	"time"
 )
