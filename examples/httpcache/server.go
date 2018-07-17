@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/go-redis/redis"
-	"github.com/importcjj/cache-benchmark/mock"
 	"github.com/importcjj/localcache"
 	"net/http"
 	"time"
@@ -28,6 +27,11 @@ func (broker *redisBroker) Set(key string, b []byte) error {
 	return broker.r.Set(key, b, 0).Err()
 }
 
+func readDataFromUpStream(t string) string {
+	time.Sleep(300 * time.Millisecond)
+	return "Hello, world"
+}
+
 func Prepare() {
 	r = redis.NewClient(&redis.Options{
 		Addr: "localhost:6379",
@@ -40,7 +44,7 @@ func Prepare() {
 	service.Register("/getstring", 5*time.Second, func(key localcache.RequestKey, dest localcache.Sink) error {
 		req := key.GetValue().(*http.Request)
 		t := req.FormValue("t")
-		dest.SetBytes([]byte(mock.ReadDataFromUpStream(t)))
+		dest.SetBytes([]byte(readDataFromUpStream(t)))
 		return nil
 	})
 }
