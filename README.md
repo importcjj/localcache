@@ -1,5 +1,5 @@
 # localcache
-Dangerous and High Performance local cache service
+Dangerous but concurrent local cache wrapper service with high performance.
 
 
 ## How to use
@@ -21,7 +21,7 @@ dangerous.Register("getterName", 5*time.Second, func(key RequestKey, sink Sink) 
 })
 
 // Get Cache
-cache := dangerous.Get(&localcache.Key{
+cache := dangerous.Get(&Key{
     GetterName: "getterName",
     CacheName:  "cachename",
     Value:      context,

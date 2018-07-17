@@ -33,17 +33,28 @@ type memSink struct {
 	data []byte
 }
 
+func (sink *memSink) Reset() {
+	sink.Key = nil
+	sink.data = nil
+}
+
 func (sink *memSink) Bytes() []byte {
 	return sink.data
 }
 
 func (sink *memSink) SetValue(v interface{}) error {
-	data, err := json.Marshal(v)
-	if err != nil {
-		return err
+	switch v.(type) {
+	case string:
+		sink.data = []byte(v.(string))
+	case []byte:
+		sink.data = v.([]byte)
+	default:
+		data, err := json.Marshal(v)
+		if err != nil {
+			return err
+		}
+		sink.data = data
 	}
-
-	sink.data = data
 	return nil
 }
 

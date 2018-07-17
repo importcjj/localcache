@@ -10,14 +10,19 @@ func TestGet(t *testing.T) {
 	key := "key"
 	value := "Hello, world"
 
-	service.Register(key, 0, func(key string, desc Sink) error {
+	service.Register(key, 0, func(key RequestKey, desc Sink) error {
 		desc.SetBytes([]byte(value))
 		return nil
 	})
 
-	cache := service.Get(key)
+	getkey := &Key{
+		GetterName: key,
+		CacheName:  key,
+		Value:      nil,
+	}
+
+	cache := service.Get(getkey)
 	if s := cache.String(); s != value {
 		t.Fatalf("got %s, expect %s", value, s)
 	}
-
 }
